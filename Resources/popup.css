@@ -1,0 +1,28 @@
+:root {
+    color-scheme: light dark;
+}
+
+body {
+    width: 300px;
+    padding: 10px;
+
+    font-family: system-ui;
+    text-align: center;
+}
+
+@media (prefers-color-scheme: dark) {
+    /* Dark Mode styles go here. */
+}
+
+body strong {
+    margin-bottom: 30px;
+}
+
+.statistics-text {
+    text-align: left;
+    padding-right: 20px;
+}
+
+.statistics-number {
+    text-align: right;
+}
