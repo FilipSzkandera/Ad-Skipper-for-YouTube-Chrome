@@ -37,4 +37,9 @@ const GIFs = [
     "https://media.giphy.com/media/iSrxcRcKNkVRm/giphy-downsized-large.gif"
 ];
 
-const GIF_OVERLAY_ID = "adSkipperGifOverlay"
+const GIF_OVERLAY_ID = "adSkipperGifOverlay";
+
+const SKIPPED_ADS = 'skippedAds';
+const REPLACED_ADS = 'replacedAds';
+
+const AD_SKIPPER_CONSOLE = 'AdSkipperForYouTube';

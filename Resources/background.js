@@ -8,7 +8,6 @@
  * @description : Ad skipper Background Handler
  *=============================================**/
 
-
 async function handleUpdated(tabId, changeInfo, tabInfo) {
 //   console.log(`Updated tab: ${tabId}`);
 //   console.log("Changed attributes: ", changeInfo);

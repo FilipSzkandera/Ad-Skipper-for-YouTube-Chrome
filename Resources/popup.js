@@ -8,10 +8,11 @@
  * @description : Popup javascript handler
  *=============================================**/
 
-const REPLACED_ADS = 'replacedAds'
-const SKIPPED_ADS = "skippedAds";
+const SKIPPED_ADS = 'skippedAds';
+const REPLACED_ADS = 'replacedAds';
 
 document.addEventListener("DOMContentLoaded", (event) => {
+    console.log(REPLACED_ADS);
     // How many skipped ads -> show in popup
     chrome.storage.local.get([REPLACED_ADS], (result) => {
         const replacedAds = parseInt(result[REPLACED_ADS]);
