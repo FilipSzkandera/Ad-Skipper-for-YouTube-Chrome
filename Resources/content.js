@@ -11,11 +11,14 @@
 
 // importing constants.js
 
+console.log(`${AD_SKIPPER_CONSOLE} started!`);
+
 // Attach listener when page is updated
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     
     if (request.newpageloaded)
     {
+        replaceAdsFunc();
         console.log("Disconnecting observer");
         observer.disconnect();
         console.log("Running observer again");
@@ -35,11 +38,35 @@ function mutePage(state) {
 }
 
 let observer = new MutationObserver(mutationRecords => {
+    replaceAdsFunc();
+});
+
+// Observer, this will fire when video timer changes
+function startObserving() {
+    
+    const adModuleElement = document.getElementsByClassName('ytp-ad-module');
+    if (adModuleElement.length !== 0) {
+        observer.observe(adModuleElement[0], {
+            childList: true, // observe direct children
+            subtree: false, // and lower descendants too
+            characterDataOldValue: true // pass old data to callback
+        });    
+    }
+}
+
+
+// Attempt to inject script after loading, no success :(
+// startObserving();
+// document.addEventListener('load', startObserving);
+
+function replaceAdsFunc() {
+    console.log("Observer started");
     
     // Tries to click on the "Skip Ad"
     const skipButtonElement = document.getElementsByClassName('ytp-ad-skip-button-text');
 
     if (skipButtonElement.length !== 0) {
+        console.log("Is not zero");
         skipButtonElement[0].innerHTML = "Sorry 🥲🥲";
         skipButtonElement[0].click();
 
@@ -65,6 +92,8 @@ let observer = new MutationObserver(mutationRecords => {
     const videoElement = document.getElementsByClassName('video-stream html5-main-video');
     const skipPreviewElement = document.getElementsByClassName('ytp-ad-text ytp-ad-preview-text');
 
+    console.log(skipButtonElement, videoElement, skipPreviewElement);
+
     if (videoElement.length !== 0 && skipPreviewElement.length !== 0) {
 
         videoElement[0].style.cssText += "opacity:5%;";
@@ -76,9 +105,9 @@ let observer = new MutationObserver(mutationRecords => {
             console.log("Added background");
             
             isGifInserted = true;
-
+            
             const youtubeVideoElement = document.getElementsByClassName('html5-video-container');
-
+            
             if (youtubeVideoElement !== 0)
             {   
                 mutePage(true);
@@ -116,12 +145,12 @@ let observer = new MutationObserver(mutationRecords => {
         }
     }
 
-
     
     // Try to remove Ads below the main player
     const additionalAdverts = [
-        document.getElementsByClassName('ytd-merch-shelf-renderer')[0], 
-        document.getElementById('player-ads')
+        document.getElementsByClassName('ytd-merch-shelf-renderer'), 
+        document.getElementById('player-ads'),
+        document.getElementsByTagName('ytd-ad-slot-renderer')
     ];
 
     additionalAdverts.forEach(elements => {
@@ -132,31 +161,9 @@ let observer = new MutationObserver(mutationRecords => {
         else if (elements instanceof HTMLElement) {
             chosenElement = elements;
         }
-        
 
-        chosenElement.replaceChildren();
-        chosenElement.innerHTML = "Reklama go wroooo";
+        if (chosenElement === undefined) return;
+        console.log("Element was removed: ", chosenElement);
+        chosenElement.remove();
     })
-
-});
-
-console.log(`${AD_SKIPPER_CONSOLE} started!`);
-
-// Ovserver, this will fire when video timer changes
-function startObserving() {
-    // observe everything except attributes
-    //observer.observe(document.querySelector('.ytp-time-current'), {
-    console.log("--->",document.querySelector('.ytp-ad-module'));
-    observer.observe(document.querySelector('.ytp-ad-module'), {
-        childList: true, // observe direct children
-        subtree: false, // and lower descendants too
-        characterDataOldValue: true // pass old data to callback
-    });
-
 }
-
-
-// Attempt to inject script after loading, no success :(
-startObserving();
-document.addEventListener('load', startObserving);
-
