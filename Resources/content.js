@@ -27,10 +27,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 
 let isGifInserted = false;
+let youtubeVideoContainer;
 
-var youtubeVideoContainer;
 
-let myImgWrapper = document.createElement("div");
+
 
 function getElementByXpath(path) {
   return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
@@ -57,6 +57,9 @@ function mutePage(state) {
 }
 
 let observer = new MutationObserver(mutationRecords => {
+
+    let gifElement;
+    
     
     console.log("\r\nLoop:");
     // Mute if there is an add
@@ -113,10 +116,9 @@ let observer = new MutationObserver(mutationRecords => {
             
             youtubeVideoContainer = document.getElementsByClassName('html5-video-container')[0];
             
-            myImgWrapper.innerHTML = '<img id="myCustomImage" src="' + GIFs[Math.floor(Math.random() * GIFs.length)] + '" style="position: relative; width: 100%; height: 100%;">';
-        
-            
-            youtubeVideoContainer.appendChild(myImgWrapper);
+            gifElement = document.createElement("div");
+            gifElement.innerHTML = '<img id="myCustomImage" src="' + GIFs[Math.floor(Math.random() * GIFs.length)] + '" style="position: relative; width: 100%; height: 100%;">';
+            youtubeVideoContainer.appendChild(gifElement);
             
             // Increment 'replacedAds' variable in storage
             chrome.storage.local.get(['replacedAds'], (result) => {
@@ -139,7 +141,7 @@ let observer = new MutationObserver(mutationRecords => {
         if (isGifInserted == true)
         {
             youtubeVideoContainer = document.getElementsByClassName('html5-video-container')[0];
-            youtubeVideoContainer.removeChild(myImgWrapper);
+            youtubeVideoContainer.removeChild(gifElement);
             isGifInserted = false;
             mutePage(false);
         }
