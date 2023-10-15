@@ -24,17 +24,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 
-
-
 let isGifInserted = false;
 let youtubeVideoContainer;
-
-
-
-
-function getElementByXpath(path) {
-  return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-}
 
 function create(htmlStr) {
     var frag = document.createDocumentFragment(),
@@ -117,7 +108,7 @@ let observer = new MutationObserver(mutationRecords => {
             youtubeVideoContainer = document.getElementsByClassName('html5-video-container')[0];
             
             gifElement = document.createElement("div");
-            gifElement.innerHTML = '<img id="myCustomImage" src="' + GIFs[Math.floor(Math.random() * GIFs.length)] + '" style="position: relative; width: 100%; height: 100%;">';
+            gifElement.innerHTML = `<img id="${GIF_OVERLAY_ID}" src="${GIFs[Math.floor(Math.random() * GIFs.length)]}" style="position: relative; width: 100%; height: 100%;">`;
             youtubeVideoContainer.appendChild(gifElement);
             
             // Increment 'replacedAds' variable in storage
@@ -141,7 +132,8 @@ let observer = new MutationObserver(mutationRecords => {
         if (isGifInserted == true)
         {
             youtubeVideoContainer = document.getElementsByClassName('html5-video-container')[0];
-            youtubeVideoContainer.removeChild(gifElement);
+            // youtubeVideoContainer.removeChild();
+            document.getElementById(GIF_OVERLAY_ID).remove();
             isGifInserted = false;
             mutePage(false);
         }

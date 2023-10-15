@@ -36,3 +36,5 @@ const GIFs = [
     "https://media.giphy.com/media/3oz8xMlGznNnJYB9HW/giphy.gif",
     "https://media.giphy.com/media/iSrxcRcKNkVRm/giphy-downsized-large.gif"
 ];
+
+const GIF_OVERLAY_ID = "adSkipperGifOverlay"
