@@ -11,14 +11,10 @@
 
 // importing constants.js
 
-// chrome.runtime.sendMessage({ greeting: "hello" }).then((response) => {
-//     console.log("Received response: ", response);
-// });
-
+// Attach listener when page is updated
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    console.log("Received request: ", request);
     
-    if (request.newpageloaded === "true")
+    if (request.newpageloaded)
     {
         console.log("Disconnecting observer");
         observer.disconnect();
@@ -31,7 +27,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 
 let customScreen = false;
-let didOnce = false;
 let backgroundAdded = false;
 var myElement;
 
