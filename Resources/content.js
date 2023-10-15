@@ -27,24 +27,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 let isGifInserted = false;
 let youtubeVideoContainer;
 
-function create(htmlStr) {
-    var frag = document.createDocumentFragment(),
-        temp = document.createElement('div');
-    temp.innerHTML = htmlStr;
-    while (temp.firstChild) {
-        frag.appendChild(temp.firstChild);
-    }
-    return frag;
-}
-
-function muteMe(elem, state) {
-    elem.muted = state;
-}
 
 function mutePage(state) {
     var elems = document.querySelectorAll("video, audio");
-
-    [].forEach.call(elems, function(elem) { muteMe(elem, state); });
+    Array.from(elems).forEach((elem) => {
+        elem.muted = state;
+    });
 }
 
 let observer = new MutationObserver(mutationRecords => {
