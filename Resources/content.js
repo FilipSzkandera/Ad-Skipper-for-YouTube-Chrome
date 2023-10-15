@@ -26,9 +26,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 
 
-let customScreen = false;
-let backgroundAdded = false;
-var myElement;
+let isGifInserted = false;
+
+var youtubeVideoContainer;
 
 let myImgWrapper = document.createElement("div");
 
@@ -105,19 +105,18 @@ let observer = new MutationObserver(mutationRecords => {
         // If it came to this without falling failing, there is a non-skippable Ad
         
         // Inject Background image
-        if (customScreen == false)
+        if (isGifInserted == false)
         {
             console.log("Added background");
             
-            customScreen = true;
-            backgroundAdded = true;
+            isGifInserted = true;
             
-            myElement = document.getElementsByClassName('html5-video-container')[0];
+            youtubeVideoContainer = document.getElementsByClassName('html5-video-container')[0];
             
             myImgWrapper.innerHTML = '<img id="myCustomImage" src="' + GIFs[Math.floor(Math.random() * GIFs.length)] + '" style="position: relative; width: 100%; height: 100%;">';
         
             
-            myElement.appendChild(myImgWrapper);
+            youtubeVideoContainer.appendChild(myImgWrapper);
             
             // Increment 'replacedAds' variable in storage
             chrome.storage.local.get(['replacedAds'], (result) => {
@@ -137,12 +136,11 @@ let observer = new MutationObserver(mutationRecords => {
         // No Ad, remove the GIF and up the opacity
         document.getElementsByClassName('video-stream html5-main-video')[0].style.cssText += "opacity:100%;";
         
-        if (backgroundAdded == true)
+        if (isGifInserted == true)
         {
-            backgroundAdded = false;
-            myElement = document.getElementsByClassName('html5-video-container')[0];
-            myElement.removeChild(myImgWrapper);
-            customScreen = false;
+            youtubeVideoContainer = document.getElementsByClassName('html5-video-container')[0];
+            youtubeVideoContainer.removeChild(myImgWrapper);
+            isGifInserted = false;
             mutePage(false);
         }
     }
