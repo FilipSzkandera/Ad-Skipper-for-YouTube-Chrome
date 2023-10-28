@@ -17,7 +17,7 @@ async function handleUpdated(tabId, changeInfo, tabInfo) {
 
     if (changeInfo.status === "complete") {
         await chrome.tabs.query({active: true, currentWindow: true}, async function(tabs){
-            console.log(tabs)
+            // console.log(tabs)
             await chrome.tabs.sendMessage(tabs[0].id, {newpageloaded: true}, function(response) {});
         });
     }

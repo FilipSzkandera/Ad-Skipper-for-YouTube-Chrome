@@ -26,3 +26,7 @@ body strong {
 .statistics-number {
     text-align: right;
 }
+
+#madeby {
+    margin-top: 20px;
+}
