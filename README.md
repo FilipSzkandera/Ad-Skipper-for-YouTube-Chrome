@@ -12,8 +12,6 @@ This Chrome extension is designed to enhance the YouTube viewing experience by p
     - Download the extension from the Chrome Web Store or install it manually by enabling Developer Mode in Chrome's extension settings and loading the extension unpacked.
 2. **Activation**:
     - Once installed, the extension runs in the background and automatically detects and skips ads or replaces them with GIFs according to the user's settings.
-3. **Settings**:
-    - Access the extension's settings panel by clicking on the extension icon in the Chrome toolbar. Users can enable or disable ad skipping, set preferences for GIF replacement, and customize their viewing experience.
 
 ## Legal & Ethical Considerations
 - **Note**: The extension might affect YouTube's ad policies. Ensure compliance with YouTube's terms of service before using the extension extensively.
