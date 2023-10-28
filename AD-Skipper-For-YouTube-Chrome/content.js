@@ -14,17 +14,45 @@
 console.log(`${AD_SKIPPER_CONSOLE} started!`);
 
 // Attach listener when page is updated
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
     
     if (request.newpageloaded)
     {
-        replaceAdsFunc();
+        console.log("Called");
+        await waitUntil()
+        console.log("Promise resolved!");
         console.log("Disconnecting observer");
         observer.disconnect();
         console.log("Running observer again");
         startObserving();
     }
 });
+
+/**
+ * Waits for AD element to load or for timeout
+ */
+function waitUntil(){
+    return new Promise(resolve => {
+        const observer = new MutationObserver(mutations => {
+            const element = document.querySelector(".ytp-ad-module");
+            console.log(element);
+            if (element) {
+                observer.disconnect();
+                return resolve();
+            }
+        })
+
+        setTimeout(() => {
+            observer.disconnect();
+            resolve();
+        }, 10000);
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        })
+    })
+}
 
 
 let isGifInserted = false;
@@ -45,7 +73,9 @@ let observer = new MutationObserver(mutationRecords => {
 function startObserving() {
     
     const adModuleElement = document.getElementsByClassName('ytp-ad-module');
+    // const adModuleElement = document.body;
     if (adModuleElement.length !== 0) {
+        console.log(adModuleElement[0])
         observer.observe(adModuleElement[0], {
             childList: true, // observe direct children
             subtree: false, // and lower descendants too
