@@ -31,5 +31,5 @@ This extension is released under the MIT License.
 ## Authors
 - @ten_filip
 
-# Special thanks to
+### Special thanks to
 - @Ricaps02
