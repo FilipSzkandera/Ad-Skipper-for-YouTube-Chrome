@@ -120,7 +120,7 @@ function replaceAdsFunc() {
         
     
     const videoElement = document.getElementsByClassName('video-stream html5-main-video');
-    const skipPreviewElement = document.getElementsByClassName('ytp-ad-text ytp-ad-preview-text');
+    const skipPreviewElement = document.getElementsByClassName('ytp-ad-text ytp-ad-preview-text-modern');
 
     console.log(skipButtonElement, videoElement, skipPreviewElement);
 
